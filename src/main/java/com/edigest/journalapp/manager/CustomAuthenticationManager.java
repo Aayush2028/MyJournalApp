@@ -2,14 +2,12 @@ package com.edigest.journalapp.manager;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -35,9 +33,6 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
         User user = userRepository.findByUsername(username);
         
-//        System.out.println("----"+user.getPassword()+"----");
-//        System.out.println("----"+password+"----");
-//        System.out.println("--------------------------------");
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Invalid username or password");
         }
