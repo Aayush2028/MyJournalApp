@@ -1,0 +1,51 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Maven target directory
+/target/
+
+# Eclipse specific files
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+*.iws
+
+# NetBeans specific files
+/nbproject/private/
+/build/
+/dist/
+
+# VS Code specific files
+.vscode/
+
+# OS-specific files
+.DS_Store                # macOS
+Thumbs.db                # Windows
+desktop.ini              # Windows
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Java-specific files
+hs_err_pid*
+*.hprof
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven-specific files
+!**/src/main/**    # Allow source files
+!**/src/test/**    # Allow test source files
+.mvn/
+.settings.xml
