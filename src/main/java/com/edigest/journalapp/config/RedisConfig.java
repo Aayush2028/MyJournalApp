@@ -21,11 +21,7 @@ public class RedisConfig {
 //	RedisConnectionFactory is an Interface to establish/manage connection with redis server.
 	@Bean
 	public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
-		if (factory instanceof LettuceConnectionFactory) {
-	        LettuceConnectionFactory lettuceFactory = (LettuceConnectionFactory) factory;
-	        System.out.println("Redis Host: " + lettuceFactory.getHostName());
-	        System.out.println("Redis Port: " + lettuceFactory.getPort());
-	    }
+		
 		RedisTemplate redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(factory);
 		

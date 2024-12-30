@@ -9,30 +9,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.edigest.journalapp.manager.CustomAuthenticationManager;
-
 @Configuration
 public class SecurityConfig {
+	
+	@Autowired
+	private JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationManager authManager) throws Exception {
-        CustomAuthenticationFilter customJournalFilter = new CustomAuthenticationFilter(authManager);
-        customJournalFilter.setFilterProcessesUrl("/journal/**"); 
-        
-        CustomAuthenticationFilter customUserFilter = new CustomAuthenticationFilter(authManager);
-        customUserFilter.setFilterProcessesUrl("/user/**"); 
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        CustomAuthenticationFilter customJournalFilter = new CustomAuthenticationFilter(authManager);
+//        customJournalFilter.setFilterProcessesUrl("/journal/**"); 
+//        
+//        CustomAuthenticationFilter customUserFilter = new CustomAuthenticationFilter(authManager);
+//        customUserFilter.setFilterProcessesUrl("/user/**"); 
 
-        http
-            .csrf().disable()  // Disable CSRF for non-browser clients (if needed)
-            .authorizeHttpRequests()
-                .requestMatchers("/journal/**", "/user/**").authenticated()
-                .anyRequest().permitAll()
-            .and()
-            .addFilterBefore(customJournalFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(customUserFilter, UsernamePasswordAuthenticationFilter.class);
+//        http
+//            .csrf().disable()  // Disable CSRF for non-browser clients (if needed)
+//            .authorizeHttpRequests()
+//                .requestMatchers("/journal/**", "/user/**").authenticated()
+//                .anyRequest().permitAll()
+//            .and()
+//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         
 
-         return http.build();
+    	http.csrf(csrf -> csrf.disable());
+    	http
+        .authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/journal/**", "/user/**").authenticated();
+            auth.anyRequest().permitAll();
+        });
+
+    	http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
     
     @Bean
