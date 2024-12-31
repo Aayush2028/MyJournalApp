@@ -9,12 +9,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
 
 @Document(collection = "users")
 @Data
@@ -25,7 +22,7 @@ public class User {
 	
 	@Indexed(unique = true)
 	@NonNull
-	private String username;//indexing on username for faster access
+	private String username;
 
 	@NonNull
 	private String password;
@@ -33,7 +30,7 @@ public class User {
 	
 
 	@DBRef
-	private List<JournalEntry> journalEntries = new ArrayList<>();//This will contain reference to entries in journal_entries table for a user
+	private List<JournalEntry> journalEntries = new ArrayList<>();
 	
 	private String role;
 	

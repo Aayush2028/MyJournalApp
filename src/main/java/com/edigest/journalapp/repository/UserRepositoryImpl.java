@@ -12,7 +12,6 @@ import com.edigest.journalapp.entity.User;
 
 @Component
 public class UserRepositoryImpl {
-	//MongoTemplate is configured automatically through the uri and database that we have provided in properties file
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	

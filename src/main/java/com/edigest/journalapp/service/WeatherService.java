@@ -11,9 +11,6 @@ import com.edigest.journalapp.response.WeatherResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-//Difference between @Component and @Service.
-//In service we write business logic. We can also write @Component, but if one day some other person reads your code and sees
-//@Service annotation, then he/she will know that this particular class contains business logic.
 @Service
 @Slf4j
 public class WeatherService {
@@ -33,10 +30,7 @@ public class WeatherService {
 		WeatherResponse response = redisService.get("weather_of_"+city, WeatherResponse.class);
 		if(response == null) {
 			String weatherApi = appCache.APP_CACHE.get(AppCache.keys.weather_api.toString());
-			String url = UriComponentsBuilder.fromHttpUrl(weatherApi)
-	                .queryParam("access_key", apiKey)
-	                .queryParam("query", city)
-	                .toUriString();
+			String url = UriComponentsBuilder.fromUriString(weatherApi).queryParam("access_key", apiKey).queryParam("query", city).toUriString();
 			
 			log.info("Url: {} and City: {}", url, city);
 			WeatherResponse weatherResponse = restTemplate.getForObject(url, WeatherResponse.class);

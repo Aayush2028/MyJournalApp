@@ -2,16 +2,13 @@ package com.edigest.journalapp.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +29,7 @@ import com.edigest.journalapp.service.UserService;
 @RestController
 @RequestMapping("/journal")
 public class JournalEntryControllerV2 {
-	//Spring created an instance of JournalEntryService, we injected it in our code. But first, we will have to annotate the service with @Component
-	//so that spring can create its instance.
+	
 	@Autowired
 	private JournalEntryService journalEntryService;
 	

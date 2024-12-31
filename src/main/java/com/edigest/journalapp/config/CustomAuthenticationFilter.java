@@ -38,7 +38,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-//        System.out.println("Authentication successful for user: " + authResult.getName());
 
         // Set the Authentication in the SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authResult);

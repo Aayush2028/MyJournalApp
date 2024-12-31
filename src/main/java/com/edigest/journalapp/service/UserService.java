@@ -1,18 +1,14 @@
 package com.edigest.journalapp.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.edigest.journalapp.entity.JournalEntry;
 import com.edigest.journalapp.entity.User;
 import com.edigest.journalapp.repository.UserRepo;
 
@@ -28,7 +24,6 @@ public class UserService {
 	
 	
 	public User saveUser(User user, String userStatus) {
-		//If a document with same entry id is present in the table then, instead of creating a new entry, the existing one will be updated.
 		if(userStatus.equals("new") || userStatus.equals("update_existing")) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		}

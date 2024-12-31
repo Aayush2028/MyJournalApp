@@ -29,9 +29,7 @@ public class UserScheduler {
 	
 	@Autowired
 	private AppCache appCache;
-	
-//	cron provides that this scheduler will run every Sunday at Morning 9:00 A.M.
-//	You also have to tell SpringBoot that you have such Schedulers which you want to run every Sunday through @EnableScheduling over main class.
+
 	@Scheduled(cron = "0 0 9 * * SUN")
 	public void fetchUsersAndSendMail() {
 		List<User> users = userRepositoryImpl.getUsersForSentimentAnanlysis();
@@ -57,7 +55,6 @@ public class UserScheduler {
 		}
 	}
 	
-	//In-Memory cache will be cleared every 10 mins
 	@Scheduled(cron = "0 0/10 * ? * *")
 	public void clearInMemoryCache() {
 		appCache.init();
