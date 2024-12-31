@@ -10,8 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class RedisTest {
 	@Autowired
 	private RedisTemplate redisTemplate;
-	//redis start method: first start wsl.exe(C//Program Files/WSL/wsl.exe
-	//Then write these commands one by one: sudo service redis-server start, redis-cli
+
 	@Disabled
 	@Test
 	public void testSendEmail() {

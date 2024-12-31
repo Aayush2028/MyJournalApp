@@ -24,7 +24,6 @@ public class AppCache {
 	//This will work as in-memory cache  
 	public Map<String, String> APP_CACHE;
 	
-	//This method is invoked automatically whenever Bean AppCache is created
 	@PostConstruct
 	public void init() {
 		APP_CACHE = new HashMap<>();

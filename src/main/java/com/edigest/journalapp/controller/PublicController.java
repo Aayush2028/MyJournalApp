@@ -41,7 +41,6 @@ public class PublicController {
 		return userService.saveUser(user, "new");
 	}
 	
-	//Login controller will return a JWT token with an expiry of, lets say, few hours
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user) {
 		try {

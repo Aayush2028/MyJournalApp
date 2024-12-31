@@ -17,21 +17,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        CustomAuthenticationFilter customJournalFilter = new CustomAuthenticationFilter(authManager);
-//        customJournalFilter.setFilterProcessesUrl("/journal/**"); 
-//        
-//        CustomAuthenticationFilter customUserFilter = new CustomAuthenticationFilter(authManager);
-//        customUserFilter.setFilterProcessesUrl("/user/**"); 
-
-//        http
-//            .csrf().disable()  // Disable CSRF for non-browser clients (if needed)
-//            .authorizeHttpRequests()
-//                .requestMatchers("/journal/**", "/user/**").authenticated()
-//                .anyRequest().permitAll()
-//            .and()
-//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        
-
     	http.csrf(csrf -> csrf.disable());
     	http
         .authorizeHttpRequests(auth -> {

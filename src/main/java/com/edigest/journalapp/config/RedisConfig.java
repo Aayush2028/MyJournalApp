@@ -16,9 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 	@Value("${spring.redis.uri}")
     private String redisUri;
-//	We will write a Bean for RedisTemplate so that whatever update we make from our code in redis, it will be reflected from redis-cli and vice-versa.
-//	By default it does not work since the serializer/de-serializer of redis and our code is different.
-//	RedisConnectionFactory is an Interface to establish/manage connection with redis server.
+
 	@Bean
 	public RedisTemplate redisTemplate(RedisConnectionFactory factory) {
 		

@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-//We add this annotation because when we autowire a bean, it should have been created first. Spring Boot Test makes those beans same as Spring Boot Application annotation does.
 @SpringBootTest
 public class UserServiceTest {
 	@Autowired
