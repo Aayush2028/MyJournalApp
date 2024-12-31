@@ -1,14 +1,12 @@
-# Use a lightweight OpenJDK base image
+# Stage 1: Build
+FROM maven:3.8.6-openjdk-17-slim AS builder
+WORKDIR /app
+COPY . .
+RUN ./mvnw clean package
+
+# Stage 2: Runtime
 FROM openjdk:17-jdk-slim
-
-# Set the working directory in the container
-WORKDIR /journalapp
-
-# Copy the JAR file from the target directory into the container
-COPY target/journalapp-0.0.1-SNAPSHOT.jar journalapp.jar
-
-# Expose the port your application runs on (default: 8080)
+WORKDIR /app
+COPY --from=builder /app/target/my-spring-app.jar app.jar
 EXPOSE 8080
-
-# Run the JAR file
 ENTRYPOINT ["java", "-jar", "app.jar"]
