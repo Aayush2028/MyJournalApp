@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y maven
 
 # Copy and build the application
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # Stage 2: Runtime
 FROM openjdk:17-jdk-slim
