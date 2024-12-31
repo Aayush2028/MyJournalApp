@@ -1,6 +1,11 @@
 # Stage 1: Build
-FROM maven:3.8.7-openjdk-17-slim AS builder
+FROM openjdk:17-jdk-slim AS builder
 WORKDIR /app
+
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copy and build the application
 COPY . .
 RUN mvn clean package
 
