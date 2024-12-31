@@ -11,10 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.edigest.journalapp.entity.User;
 import com.edigest.journalapp.repository.UserRepo;
 
+@ActiveProfiles("test")
 public class JournalEntryServiceTest {
 
 	@InjectMocks
