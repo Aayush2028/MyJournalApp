@@ -1,8 +1,8 @@
 # Stage 1: Build
-FROM maven:3.8.6-openjdk-17-slim AS builder
+FROM maven:3.8.7-openjdk-17-slim AS builder
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package
+RUN mvn clean package
 
 # Stage 2: Runtime
 FROM openjdk:17-jdk-slim
