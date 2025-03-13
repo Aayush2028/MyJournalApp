@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edigest.journalapp.entity.JournalEntry;
 import com.edigest.journalapp.entity.User;
+import com.edigest.journalapp.request.JournalEntryRequest;
+import com.edigest.journalapp.response.JournalEntryResponse;
 import com.edigest.journalapp.service.JournalEntryService;
 import com.edigest.journalapp.service.UserService;
 
@@ -37,25 +40,37 @@ public class JournalEntryControllerV2 {
 	private UserService userService;
 	
 	@GetMapping
-	public ResponseEntity<List<JournalEntry>> getAllJournalEntriesOfUser(){
+	public ResponseEntity<List<JournalEntryResponse>> getAllJournalEntriesOfUser(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		User user = userService.findByUsername(username);
 		List<JournalEntry> entries = user.getJournalEntries();
+		List<JournalEntryResponse> response = entries.stream().map(entry -> new JournalEntryResponse(entry.getId().toString(), entry.getTitle(),entry.getContent(), entry.getDate(), entry.getSentiment())).collect(Collectors.toList());
+				
 		if(entries != null && !entries.isEmpty()) {
-			return new ResponseEntity<>(entries, HttpStatus.OK);
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping
-	public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry entry) {
+	public ResponseEntity<?> createEntry(@RequestBody JournalEntryRequest entry) {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			String username = auth.getName();
-			entry.setDate(LocalDateTime.now());
-			journalEntryService.saveEntry(entry, username);
-			return new ResponseEntity<>(entry, HttpStatus.CREATED);
+//			entry.setDate(LocalDateTime.now());
+			JournalEntry entryToBeSaved = new JournalEntry();
+			entryToBeSaved.setTitle(entry.getTitle());
+			entryToBeSaved.setContent(entry.getContent());
+			entryToBeSaved.setSentiment(entry.getSentiment());
+			entryToBeSaved.setDate(LocalDateTime.now());
+			JournalEntry entryInDb = journalEntryService.saveEntry(entryToBeSaved, username);
+			return new ResponseEntity<>(new JournalEntryResponse(entryInDb.getId().toString(),
+					entryInDb.getTitle(), 
+					entryInDb.getContent(), 
+					entryInDb.getDate(), 
+					entryInDb.getSentiment()), 
+					HttpStatus.CREATED);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -87,7 +102,7 @@ public class JournalEntryControllerV2 {
 	}
 	
 	@PutMapping("/update-by-id/{id}")
-	public ResponseEntity<?> updateEntryById( @PathVariable ObjectId id, @RequestBody JournalEntry updatedEntry) {
+	public ResponseEntity<?> updateEntryById( @PathVariable ObjectId id, @RequestBody JournalEntryRequest updatedEntry) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		User user = userService.findByUsername(username);
@@ -98,7 +113,12 @@ public class JournalEntryControllerV2 {
 				journalEntry.setTitle(updatedEntry.getTitle() != null?updatedEntry.getTitle():journalEntry.getTitle());
 				journalEntry.setContent(updatedEntry.getContent() != null?updatedEntry.getContent():journalEntry.getContent());
 				journalEntryService.saveEntry(journalEntry);
-				return new ResponseEntity<>(journalEntry, HttpStatus.OK);
+				return new ResponseEntity<>(new JournalEntryResponse(journalEntry.getId().toString(),
+						journalEntry.getTitle(), 
+						journalEntry.getContent(), 
+						journalEntry.getDate(), 
+						journalEntry.getSentiment()), 
+						HttpStatus.OK);
 			}
 		}
 		
